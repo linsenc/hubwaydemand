@@ -1,20 +1,20 @@
 # Bikesharing System Demand Estimation Project
 
-In this project, we aim to predict the short term bike demand at all stations of the bike sharing system of Boston, named Hubway. The goal is to facilitate bike users for rentals and returns. The goal is to be able to answer the following question: given the bike distributions at the time of interest, can we predict how many bikes will be at the stations of interset in 15 minutes. We believe this project can help a bike renter to determine if the destination station has an empty slot available in 15 minutes, as well as to determine if a station has a bike in the next 15 minutes, such as a potential renter can get a bike.
+In this project, we aim to predict the short term bike demand at all stations of the bike sharing system of Boston, named Hubway. The goal is to facilitate bike users for rentals and returns. For instance, we would like to answer the following question: given the number of bikes distributed across all stations at the moment, can we predict how many bikes will be at the stations of interset in the next 15 minutes. We believe this project can help a bike renter to determine if the station to return has an empty slot available in 15 minutes, as well as to determine if a station has a bike available in the next 15 minutes, such as the renter can get a bike.
 
-In this project, we formulate this problem as a demand prediction problem, where the goal is to predict the bike station demand as the next time interval. In this project, we use various machine learning techiniques to solve this problem. This readme file provides the outline of the project, including data, models, as well as a brief discription of the content of the codes. For technical details and results, please refer to the report **Hubway_project.pdf** for more information .  
+In this project, we formulate this problem as a demand prediction problem, where the goal is to predict the bike station demand at the next time interval. In this project, we use various machine learning techiniques to solve this problem. This readme file provides the outline of the project, including data, models, as well as a brief discription of the content of the codes. For technical details and results, please refer to the report **Hubway_project.pdf** for more information .  
 
 ## Data
-We use two sources of data: 1) hubway station status data (from http://hubwaydatachallenge.org/) and 2) weather data of Boston (https://www.ncdc.noaa.gov/cdo-web/search). Both datasets are public available. In this document, as an illustration, we use a subset of station status data for three months (May, June and July) of 2012 as an illustration. This subset can be found as **stationsub3.csv** in this repository. The weather data are monthly data, we save them as **weatherMay.csv**, **weatherJune.csv** and **weatherJuly.csv**. For more details regarding data, please refer to the report for a more detailed description.
+We use two sources of data: 1) hubway station status data (http://hubwaydatachallenge.org/) and 2) weather data of Boston (https://www.ncdc.noaa.gov/cdo-web/search). Both datasets are public available. In this document, as an illustration, we use a subset of station status data for three months (May, June and July) of 2012 as an illustration. This subset can be found as **stationsub3.csv** in this repository. The weather data are monthly data, they are **weatherMay.csv**, **weatherJune.csv** and **weatherJuly.csv** in this repository. For more details regarding data, please refer to the report for a more detailed description.
 
 ## Model
 
-We use a variety of models to predict demand. The models are station based. Thus, for each station, we build an independent model. The models we've built include 
+We use a variety of models to predict demand. The models are station based. In other words, for each station, we build an independent model. The models we've built include:
 
-1) Regression.
+1) Regression
 
 
-    We would like to preduct how many bikes will be at a station in the next 15 minutes. We build three models:
+    We would like to predict how many bikes will be at a station in the next 15 minutes. We build three models:
 
     Ridge regression with Gaussian Kernel
 
@@ -27,7 +27,7 @@ We use a variety of models to predict demand. The models are station based. Thus
 2) Classification
 
 
-    We would like to predict if a bike station will be empty in the next 15 minutes, and if a bike station will be full in the next 15 minutes. Both problems are binary classification problems. We build several models:
+    We would like to predict if a bike station will be empty in the next 15 minutes, and also, if a bike station will be full in the next 15 minutes. Both problems are binary classification problems. We build several models:
 
     SVM with Gaussian Kernel
     
@@ -53,11 +53,11 @@ This project is coded in two .py files: 1) **Hubway.py** and 2) **adaboost_svm.p
 
 Functions written in **Hubway.py**
 
-function **preprocess**: this function includes three steps : 1) process station status data 2) process weather data and 3) merge. In addition, feature normalization is done in this function
+function **preprocess**: this function preprocesses raw data and changes them into features. It includes three steps : 1) process station status data 2) process weather data and 3) merge. In addition, feature normalization is done in this function
 
-function **data_clean_all_ohe**: this function transform categorical features into dummay variables 
+function **data_clean_all_ohe**: this function transforms categorical features into dummay variables 
 
-function **splitdata**: this function split dataset into training data and test data
+function **splitdata**: this function splits dataset into training data and test data
 
 class **RegressionModel**: three regression models are summarized in this class
 
