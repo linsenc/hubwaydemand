@@ -161,25 +161,25 @@ class RegressionModel(): #class of regression model
         self.model=[] #the final model is saved here
         
         # extra variable to store the trained model
-        self._train_preds = []
-        self._test_preds = []
-        self._train_MSE =0
-        self._test_MSE=0
+        self._train_preds = []#save predictions of the training data
+        self._test_preds = []#save predictions of the test data
+        self._train_MSE =0#the MSE on training dataset
+        self._test_MSE=0#the MSE on testing set
         
     def fit(self,X,Y):
-        kr = GridSearchCV(self.method, cv=5, param_grid=self.params)
-        self.model=kr.fit(X,Y)
-        self._train_preds=self.model.predict(X)
-        self._train_MSE=np.sum((self._train_preds-Y)**2)/len(Y)
+        kr = GridSearchCV(self.method, cv=5, param_grid=self.params)#use gridsearch to find the best parameters for cross validation
+        self.model=kr.fit(X,Y)#fit the model
+        self._train_preds=self.model.predict(X)#make estimates for training set
+        self._train_MSE=np.sum((self._train_preds-Y)**2)/len(Y)#MSE
         return self
     
     def predict(self,Xtest,Ytest):
         Ypred=self.model.predict(Xtest)
-        self._test_preds=self.model.predict(Xtest)
-        self._test_MSE=np.sum((self._test_preds-Ytest)**2)/len(Ytest)
+        self._test_preds=self.model.predict(Xtest)#prediction for test set
+        self._test_MSE=np.sum((self._test_preds-Ytest)**2)/len(Ytest)#MSE
         return self
     
-    def getPerformanceMetrix(self):
+    def getPerformanceMetric(self):
         return self._train_MSE,self._test_MSE
     
 
@@ -211,7 +211,7 @@ class ClassificationModel(): #class of (non-adaboost) classification model
         self._test_E=1-np.sum(self._test_preds==Ytest)/len(Ytest)
         return self
     
-    def getPerformanceMetrix(self):
+    def getPerformanceMetric(self):
         return self._train_E,self._test_E
     
 
@@ -261,7 +261,7 @@ class AdaboostModel(): #class of adaboost model
     #    self._test_E=1-np.sum(self._test_preds==Ytest)/len(Ytest)
     #    return self
     
-    def getPerformanceMetrix(self):
+    def getPerformanceMetric(self):
         return self._train_E,self._val_E,self._test_E
     
 
@@ -298,19 +298,19 @@ def regression_mdls(allstationTrain,allstationTest,allstationID,featureCol):
         krg=krg.fit(XtrainRG, YtrainRG)
         krg=krg.predict(XtestRG,YtestRG)
         krg_model.append(krg)
-        MSETrain_ridge_kernel[i],MSETest_ridge_kernel[i]=krg.getPerformanceMetrix()
+        MSETrain_ridge_kernel[i],MSETest_ridge_kernel[i]=krg.getPerformanceMetric()
     
         rg = RegressionModel(Ridge(), param_grid_rg)#ridge regression with linear kernel
         rg=rg.fit(XtrainRG, YtrainRG)
         rg=rg.predict(XtestRG,YtestRG)
         rg_model.append(rg)
-        MSETrain_ridge[i],MSETest_ridge[i]=rg.getPerformanceMetrix()
+        MSETrain_ridge[i],MSETest_ridge[i]=rg.getPerformanceMetric()
     
         rlasso = RegressionModel(Lasso(), param_grid_lasso)#lasso regression
         rlasso=rlasso.fit(XtrainRG, YtrainRG)
         rlasso=rlasso.predict(XtestRG,YtestRG)
         lasso_model.append(rlasso)
-        MSETrain_lasso[i],MSETest_lasso[i]=rlasso.getPerformanceMetrix()
+        MSETrain_lasso[i],MSETest_lasso[i]=rlasso.getPerformanceMetric()
     return MSETest_ridge_kernel,MSETest_ridge,MSETest_lasso
     
 
@@ -348,14 +348,14 @@ def classification_mdls(allstationTrain,allstationTest,allstationID,featureCol):
         clfSVM=clfSVM.fit(Xtrain, Ytrain)
         clfSVM=clfSVM.predict(Xtest,Ytest)
         SVM_model.append(clfSVM)
-        ETrain_SVM[i],ETest_SVM[i]=clfSVM.getPerformanceMetrix()
+        ETrain_SVM[i],ETest_SVM[i]=clfSVM.getPerformanceMetric()
     
         #random forest
         clfRDforest = ClassificationModel(RandomForestClassifier(), param_grid_rd)
         clfRDforest=clfRDforest.fit(Xtrain, Ytrain)
         clfRDforest=clfRDforest.predict(Xtest,Ytest)
         SVM_model.append(clfRDforest)
-        ETrain_RDforest[i],ETest_RDforest[i]=clfRDforest.getPerformanceMetrix()
+        ETrain_RDforest[i],ETest_RDforest[i]=clfRDforest.getPerformanceMetric()
 
     return ETest_SVM,ETest_RDforest
 
@@ -404,13 +404,13 @@ def adaboost_mdls(allstationTrain,allstationTest,allstationID,featureCol):#adabo
         ada_K = AdaboostModel(nbRuns, beta,'kernel',C)
         ada_K=ada_K.fit_predict(X, Y,Xval,Yval,Xtest,Ytest)
         ada_K_model.append(ada_K)
-        ETrain_ada_K[i],valE,ETest_ada_K[i]=ada_K.getPerformanceMetrix()
+        ETrain_ada_K[i],valE,ETest_ada_K[i]=ada_K.getPerformanceMetric()
     
         #adaboost SVM with linear kernel
         ada_L = AdaboostModel(nbRuns, [],'linear',C)
         ada_L=ada_L.fit_predict(X, Y,Xval,Yval,Xtest,Ytest)
         ada_L_model.append(ada_L)
-        ETrain_ada_L[i],valE,ETest_ada_L[i]=ada_L.getPerformanceMetrix()
+        ETrain_ada_L[i],valE,ETest_ada_L[i]=ada_L.getPerformanceMetric()
         
         return ETest_ada_K,ETest_ada_L
 
