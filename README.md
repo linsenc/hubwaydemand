@@ -14,50 +14,65 @@ We use a variety of models to predict demand. The models are station based. Thus
 1) Regression.
 
 
-We would like to preduct how many bikes will be at a station in the next 15 minutes. We build three models:
+    We would like to preduct how many bikes will be at a station in the next 15 minutes. We build three models:
 
-Ridge regression with Gaussian Kernel
-
-
-Ridge regression
+    Ridge regression with Gaussian Kernel
 
 
-Lasso regression
+    Ridge regression
+
+
+    Lasso regression
 
 2) Classification
-  We would like to predict if a bike station will be empty in the next 15 minutes, and if a bike station will be full in the next 15 minutes. Both problems are binary classification problems. We build several models:
 
-  SVM with Gaussian Kernel
-  Random forest
-  Adaboost SVM (with linear Kernel)
-  Adaboost SVM with Gaussian Kernel
-  Graphical Model Chow-and-Liu Tree
+
+    We would like to predict if a bike station will be empty in the next 15 minutes, and if a bike station will be full in the next 15 minutes. Both problems are binary classification problems. We build several models:
+
+    SVM with Gaussian Kernel
+    
+    Random forest
+    
+    Adaboost SVM (with linear Kernel)
+    
+    Adaboost SVM with Gaussian Kernel
+   
+    Graphical Model Chow-and-Liu Tree
 
 Note that we build two Adaboost algorithms with two SVM models (linear, Gaussian) as the weak classifier. Also please note that we hand-code the two Adaboost algorithms: we formulate the SVM dual form as a quadratic programming problem and solve efficiently. Except for the Chow-and-Liu tree model, all other models are included in this repository, coded in python. Expect for the two Adaboost algorithms, other models are coded with the built-in regression/classification models in scikit-learn.     
 
 
 
-There are two main .py files. 1) 2)
-
-describe data
-
-read the classes.
-
-faciliate read the codes
-
-In file 2), we put the functions
 
 ## Code structure
 
-There are two main .py files. 1) 2)
-
-describe data
-
-read the classes.
-
-faciliate read the codes
-
-In file 2), we put the functions
+This project is coded in two .py files: 1) Hubway.py and 2) adaboost_svm.py. The main file is Hubway.py. In this part, we briefly introduce the key functions/classes in the codes.
 
 
-To run script Hubway.py, please change the folder variabe to your local directory, and you are free to go.
+# Functions and classes
+
+Functions written in Hubway.py
+
+function preprocess: this function includes three steps : 1) process station status data 2) process weather data and 3) merge. In addition, feature normalization is done in this function
+
+function data_clean_all_ohe: this function transform categorical features into dummay variables 
+
+function splitdata: this function split dataset into training data and test data
+
+class RegressionModel: three regression models are summarized in this class
+
+class ClassificationModel: two built-in classification models (i.e., SVM and random forest) are summarized in this class
+
+class AdaboostModel: two adaboost SVM models are summarized in this class
+
+function regression_mdls:this function runs three regression models
+
+function classification_mdls: this function runs two built-in classification models
+
+function adaboost_mdls: this function runs two adaboost SVM models
+
+function main(): this is the main function of the project, the main steps in the main function includes: 1) data preprocessing 2) run regression 3) run built-in classfication models and 4) run adaboost models. 
+
+adaboost_svm.py includes the functions for the SVM dual optimization problem, i.e., the objective function (func), the jacobian of the objective function(func_derive), the optimization problem (quadopt), the adaboost algorithm (AdaBoost_SVM) Gaussian Kernel function (GaussianKernel). When running the adaboost algorithms, the main function calls the functions in adaboost_svm.py
+
+Note: To run Hubway.py, please change the folder varible to your local directory, and you should be free to go.
