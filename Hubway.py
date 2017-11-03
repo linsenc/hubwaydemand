@@ -281,11 +281,11 @@ def regression_mdls(allstationTrain,allstationTest,allstationID,featureCol):
     krg_model=[]
     rg_model=[]
     lasso_model=[]
-    param_grid_krg = {"alpha": [1e-4, 1e-3, 1e-2,1e-1, 1, 10,100],
+    param_grid_krg = {"alpha": [1e-4, 1e-3, 1e-2,1e-1, 1, 10,100], #the parameters of the ridge regression with Gaussian kernel
                   "kernel": ['rbf'],
                   "gamma":[1e-4, 1e-3, 1e-2,1e-1, 1, 10,100]}
-    param_grid_rg={"alpha":[1e-4, 1e-3, 1e-2,1e-1, 1, 10,100]}
-    param_grid_lasso={"alpha":[1e-4, 1e-3, 1e-2,1e-1, 1, 10,100]}
+    param_grid_rg={"alpha":[1e-4, 1e-3, 1e-2,1e-1, 1, 10,100]}#parameters of the ridge regression model
+    param_grid_lasso={"alpha":[1e-4, 1e-3, 1e-2,1e-1, 1, 10,100]}#parameters of the lasso regression model
     
     for i in range(len(allstationID)):
     #for i in range(1):
