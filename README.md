@@ -71,12 +71,12 @@ function **classification_mdls**: this function runs two built-in classification
 
 function **adaboost_mdls**: this function runs two adaboost SVM models
 
-function **main()**: this is the main function of the project, the main steps in the main function includes: 1) data preprocessing 2) run regression 3) run built-in classfication models and 4) run adaboost models. 
+function **main**: this is the main function of the project, the main steps in the main function includes: 1) data preprocessing 2) run regression 3) run built-in classfication models and 4) run adaboost models. 
 
 **adaboost_svm.py** includes the functions for the SVM dual optimization problem, i.e., the objective function (**func**), the jacobian of the objective function(**func_derive**), the optimization problem (**quadopt**), the adaboost algorithm (**AdaBoost_SVM**) Gaussian Kernel function (**GaussianKernel**). When running the adaboost algorithms, the main function calls the functions in **adaboost_svm.py**.
 
 ## Final Note
-To run scipt Hubway.py and launch the project, please download and data, change variable "folder" (in file Hubway.py) to your local directory and you should be good to go. 
+To run scipt Hubway.py and launch the project, please download the data, change variable "folder" (in file Hubway.py) to your local directory and you should be good to go. Please let me know if there are any questions.
 
 Linsen Chong
 
