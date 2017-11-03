@@ -12,20 +12,26 @@ We use two sources of data: 1) hubway station status data (from http://hubwaydat
 We use a variety of models to predict demand. The models are station based. Thus, for each station, we build an independent model. The models we've built include 
 
 1) Regression.
+
+
 We would like to preduct how many bikes will be at a station in the next 15 minutes. We build three models:
 
 Ridge regression with Gaussian Kernel
+
+
 Ridge regression
+
+
 Lasso regression
 
 2) Classification
-We would like to predict if a bike station will be empty in the next 15 minutes, and if a bike station will be full in the next 15 minutes. Both problems are binary classification problems. We build several models:
+  We would like to predict if a bike station will be empty in the next 15 minutes, and if a bike station will be full in the next 15 minutes. Both problems are binary classification problems. We build several models:
 
-SVM with Gaussian Kernel
-Random forest
-Adaboost SVM (with linear Kernel)
-Adaboost SVM with Gaussian Kernel
-Graphical Model Chow-and-Liu Tree
+  SVM with Gaussian Kernel
+  Random forest
+  Adaboost SVM (with linear Kernel)
+  Adaboost SVM with Gaussian Kernel
+  Graphical Model Chow-and-Liu Tree
 
 Note that we build two Adaboost algorithms with two SVM models (linear, Gaussian) as the weak classifier. Also please note that we hand-code the two Adaboost algorithms: we formulate the SVM dual form as a quadratic programming problem and solve efficiently. Except for the Chow-and-Liu tree model, all other models are included in this repository, coded in python. Expect for the two Adaboost algorithms, other models are coded with the built-in regression/classification models in scikit-learn.     
 
