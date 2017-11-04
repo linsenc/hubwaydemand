@@ -20,7 +20,6 @@ def GaussianKernel(X,X1,beta): #code gaussian kernal, K(X,X1), bandwidth beta
 def func(x,H):#the quadratic objective function with coefficient matrix H
     f=0
     for i in range(len(x)):
-        f=H[i,0]*x[i]
         for j in range(len(x)):
             f=f+0.5*H[i,j]*x[i]*x[j]
     f=f-sum(x)
